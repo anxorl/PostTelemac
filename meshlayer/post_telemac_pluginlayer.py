@@ -300,7 +300,7 @@ class SelafinPluginLayer(qgis.core.QgsPluginLayer):
         if  self.crs().authid() == u'':
             self.setRealCrs( qgis.utils.iface.mapCanvas().mapSettings().destinationCrs() )
             
-        self.xform = qgis.core.QgsCoordinateTransform(self.realCRS, qgis.utils.iface.mapCanvas().mapSettings().destinationCrs())
+        self.xform = qgis.core.QgsCoordinateTransform(self.realCRS, qgis.utils.iface.mapCanvas().mapSettings().destinationCrs(), qgis.core.QgsProject.instance())
         self.meshrenderer.changeTriangulationCRS()
         #update selafin values
         self.updateSelafinValuesEmit()
@@ -406,7 +406,7 @@ class SelafinPluginLayer(qgis.core.QgsPluginLayer):
         """
         self.realCRS = qgscoordinatereferencesystem
         self.setCrs(qgis.utils.iface.mapCanvas().mapSettings().destinationCrs())
-        self.xform  = qgis.core.QgsCoordinateTransform(self.realCRS, qgis.utils.iface.mapCanvas().mapSettings().destinationCrs())
+        self.xform  = qgis.core.QgsCoordinateTransform(self.realCRS, qgis.utils.iface.mapCanvas().mapSettings().destinationCrs(),qgis.core.QgsProject.instance())
         if self.meshrenderer != None :
             self.meshrenderer.changeTriangulationCRS() 
         self.forcerefresh = True
@@ -422,7 +422,7 @@ class SelafinPluginLayer(qgis.core.QgsPluginLayer):
         """Associated with mapcanvascrschaned slot and changing layer crs in property dialog"""
         try:
             self.setCrs(qgis.utils.iface.mapCanvas().mapSettings().destinationCrs())
-            self.xform  = qgis.core.QgsCoordinateTransform(self.realCRS, qgis.utils.iface.mapCanvas().mapSettings().destinationCrs())
+            self.xform  = qgis.core.QgsCoordinateTransform(self.realCRS, qgis.utils.iface.mapCanvas().mapSettings().destinationCrs(),qgis.core.QgsProject.instance())
             self.meshrenderer.changeTriangulationCRS()
             self.forcerefresh = True
             self.triggerRepaint()
