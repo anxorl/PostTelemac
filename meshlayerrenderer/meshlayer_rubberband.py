@@ -49,8 +49,8 @@ class MeshLayerRubberband(QtCore.QObject):
     def drawFromNum(self, num,type):
         if type == 0 :
             geomtemp = self.meshlayer.hydrauparser.getElemXYFromNumElem(num)[0]
-            #elemqgisgeom = QgsGeometry.fromPolygon([[QgsPoint(x1,y1),QgsPoint(x2,y2), QgsPoint(x3,y3)]])
-            elemqgisgeom = qgis.core.QgsGeometry.fromPolygon([[self.meshlayer.xform.transform( qgis.core.QgsPoint(coord[0],coord[1]) ) for coord in geomtemp]])
+            #elemqgisgeom = QgsGeometry.fromPolygon([[QgsPointXY(x1,y1),QgsPointXY(x2,y2), QgsPointXY(x3,y3)]])
+            elemqgisgeom = qgis.core.QgsGeometry.fromPolygon([[self.meshlayer.xform.transform( qgis.core.QgsPointXY(coord[0],coord[1]) ) for coord in geomtemp]])
             
             if not self.rubberbandelem:
                 self.createRubberbandElem()
@@ -64,7 +64,7 @@ class MeshLayerRubberband(QtCore.QObject):
         if type == 1:
             x,y = self.meshlayer.hydrauparser.getFaceNodeXYFromNumPoint(num)[0]
             ##print('xy',x,y)
-            qgspointfromcanvas = self.meshlayer.xform.transform( qgis.core.QgsPoint(x,y) )
+            qgspointfromcanvas = self.meshlayer.xform.transform( qgis.core.QgsPointXY(x,y) )
             
             if not self.rubberbandfacenode:
                 self.createRubberbandFaceNode()
@@ -77,7 +77,7 @@ class MeshLayerRubberband(QtCore.QObject):
         
         if type == 2:
             geomtemp = self.meshlayer.hydrauparser.getFaceXYFromNumFace(num)[0]
-            faceqgisgeom = qgis.core.QgsGeometry.fromPolyline([self.meshlayer.xform.transform( qgis.core.QgsPoint(coord[0],coord[1]) ) for coord in geomtemp])
+            faceqgisgeom = qgis.core.QgsGeometry.fromPolyline([self.meshlayer.xform.transform( qgis.core.QgsPointXY(coord[0],coord[1]) ) for coord in geomtemp])
         
             if not self.rubberbandface:
                 self.createRubberbandFace()
@@ -135,5 +135,3 @@ class MeshLayerRubberband(QtCore.QObject):
         #self.rubberbandelem.setColor(QtGui.QColor(QtCore.Qt.blue))
         self.rubberbandface.setColor(self.facecolor)
         
-        
-
